@@ -8,6 +8,28 @@ editor: visual
 self-contained: true
 ---
 
+```{r}
+install.packages("DataExplorer")
+```
+
+```{r}
+install.packages("magrittr")
+install.packages("tidyverse")
+install.packages("tidymodels")
+install.packages("gt")
+install.packages("gtExtras")
+install.packages("DataExplorer")
+```
+
+```{r}
+library(magrittr)     # the pipe
+library(tidyverse)    # for data wrangling + visualization
+library(tidymodels)   # for modeling
+library(gt)           # for making display tables
+library(gtExtras)     # helper functions for beautiful tables
+library(DataExplorer) #
+```
+
 ## Setup
 
 Load packages and data:
@@ -20,9 +42,39 @@ the_tate_artists <- readr::read_csv("data/the-tate-artists.csv")
 
 ## Exercises
 
-### Exercise 1
+```{r load-pkg-data}
 
-The `the_tate` dataset has \_\_\_ unique artists who worked from \_\_\_ to \_\_\_. The works were acquired between the years \_\_\_ and \_\_\_.
+ 
+# Load the required libraries 
+library(dplyr) 
+library(readr) 
+# Load the datasets 
+the_tate <- read_delim("data/the-tate-collection.csv", ";", escape_double = FALSE, trim_ws = TRUE) 
+the_tate_artists <- read_csv("data/the-tate-artists.csv")
+print(the_tate) 
+# Calculate the number of unique artists represented in the collection 
+unique_artists_count <- the_tate_artists |>   distinct(name) |>   nrow() 
+# Number of rows and columns in the the_tate dataset 
+tate_dimensions <- dim(the_tate) 
+# Summary statistics of the the_tate dataset 
+tate_summary <- the_tate |>   summarize(     TotalArtworks = n(),               
+# Total number of artworks    
+UniqueArtists = unique_artists_count, 
+# Number of unique artists     
+MinYear = min(year, na.rm = TRUE),  
+# Minimum year in the collection   
+MaxYear = max(year, na.rm = TRUE), # Maximum year in the collection  
+MinacquisitionYear = min(acquisitionYear, na.rm = TRUE),   
+MaxacquisitionYear = max(acquisitionYear, na.rm = TRUE)
+)
+# Print the summary 
+print(tate_summary)
+
+```
+
+## Exercise 1
+
+The `the_tate` dataset has *3526* unique artists who worked from 1545 to 2012. The works were acquired between the years 1823 and 2013.
 
 ### Exercise 2
 
